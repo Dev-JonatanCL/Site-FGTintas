@@ -84,7 +84,7 @@ interface ProfessionalData {
 }
 
 export default function ProfessionalDashboard() {
-  const { user, isAuthenticated, role } = useAuth();
+  const { user, isAuthenticated, role, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const [professional, setProfessional] =
     useState<ProfessionalData | null>(null);
@@ -125,12 +125,13 @@ export default function ProfessionalDashboard() {
   }, [user?.id]);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!isAuthenticated || role !== "professional") {
       router.push("/login");
       return;
     }
     loadData();
-  }, [isAuthenticated, role, router, loadData]);
+  }, [authLoading, isAuthenticated, role, router, loadData]);
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();

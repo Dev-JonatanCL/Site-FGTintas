@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
 } from "react";
 
@@ -24,6 +25,7 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 interface RegisterData {
@@ -42,6 +44,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Restore session on mount via /api/auth/me (reads httpOnly cookie)
+  useEffect(() => {
+    async function restoreSession() {
+      try {
+        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          setUser(data.user);
+        }
+      } catch {
+        // No valid session
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    restoreSession();
+  }, []);
 
   const login = useCallback(
     async (email: string, password: string, role: "professional" | "admin"): Promise<boolean> => {
@@ -49,6 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await fetch("/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ email, password, role }),
         });
         const data = await res.json();
@@ -70,6 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(data),
         });
         const result = await res.json();
@@ -85,7 +108,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch {
+      // Cookie will expire anyway
+    }
     setUser(null);
   }, []);
 
@@ -98,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         isAuthenticated: !!user,
+        isLoading,
       }}
     >
       {children}

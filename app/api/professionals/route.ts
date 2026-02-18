@@ -1,9 +1,56 @@
 import { NextResponse } from "next/server";
-import { getAllProfessionals } from "@/lib/data-store";
+import { db } from "@/lib/db";
+
+interface ProfessionalRow {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  specialty: string;
+  description: string;
+  city: string;
+  state: string;
+  photo: string | null;
+  referral_code: string;
+  commission_balance: number;
+  created_at: string;
+  active: boolean;
+}
 
 export async function GET() {
-  const professionals = getAllProfessionals();
-  // Return without sensitive data
-  const safe = professionals.map(({ password, ...rest }) => rest);
-  return NextResponse.json({ professionals: safe });
+  try {
+    const rows = await db.query<ProfessionalRow>(
+      `SELECT id, name, email, phone, whatsapp, specialty, description, city, state, photo,
+              referral_code, commission_balance, created_at, active
+       FROM professionals WHERE active = TRUE
+       ORDER BY created_at DESC`
+    );
+
+    const professionals = rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      email: row.email,
+      phone: row.phone,
+      whatsapp: row.whatsapp,
+      specialty: row.specialty,
+      description: row.description,
+      city: row.city,
+      state: row.state,
+      photo: row.photo || "",
+      referralCode: row.referral_code,
+      commissionBalance: Number(row.commission_balance),
+      commissionHistory: [],
+      createdAt: row.created_at,
+      active: row.active,
+    }));
+
+    return NextResponse.json({ professionals });
+  } catch (error) {
+    console.error("Get professionals error:", error);
+    return NextResponse.json(
+      { error: "Erro ao buscar profissionais" },
+      { status: 500 }
+    );
+  }
 }
