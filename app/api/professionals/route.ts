@@ -49,8 +49,8 @@ export async function GET() {
   } catch (error) {
     console.error("Get professionals error:", error);
     return NextResponse.json(
-      { error: "Erro ao buscar profissionais" },
-      { status: 500 }
+      { professionals: [], error: "Erro ao buscar profissionais" },
+      { status: 200 }
     );
   }
 }
