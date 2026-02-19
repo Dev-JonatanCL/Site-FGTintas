@@ -79,7 +79,7 @@ interface Professional {
 }
 
 export default function AdminDashboard() {
-  const { isAuthenticated, role } = useAuth();
+  const { isAuthenticated, role, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const [professionals, setProfessionals] = useState<Professional[]>(
     []
@@ -109,12 +109,13 @@ export default function AdminDashboard() {
   }, []);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!isAuthenticated || role !== "admin") {
       router.push("/login");
       return;
     }
     loadProfessionals();
-  }, [isAuthenticated, role, router, loadProfessionals]);
+  }, [authLoading, isAuthenticated, role, router, loadProfessionals]);
 
   async function handleAddCommission(e: React.FormEvent) {
     e.preventDefault();
