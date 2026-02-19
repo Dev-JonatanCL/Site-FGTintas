@@ -38,7 +38,7 @@ export default function ProfissionaisPage() {
       try {
         const res = await fetch("/api/professionals");
         const data = await res.json();
-        setProfessionals(data.professionals);
+        setProfessionals(data.professionals || []);
       } catch {
         // handle error silently
       } finally {

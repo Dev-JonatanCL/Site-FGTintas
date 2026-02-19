@@ -100,7 +100,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch("/api/professionals");
       const data = await res.json();
-      setProfessionals(data.professionals);
+      setProfessionals(data.professionals || []);
     } catch {
       toast.error("Erro ao carregar profissionais");
     } finally {
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
     0
   );
   const totalTransactions = professionals.reduce(
-    (sum, p) => sum + p.commissionHistory.length,
+    (sum, p) => sum + (p.commissionHistory?.length || 0),
     0
   );
 
@@ -421,7 +421,7 @@ export default function AdminDashboard() {
                           {formatCurrency(pro.commissionBalance)}
                         </TableCell>
                         <TableCell className="text-right">
-                          {pro.commissionHistory.length}
+                          {pro.commissionHistory?.length || 0}
                         </TableCell>
                         <TableCell className="text-center">
                           <div className="flex items-center justify-center gap-2">
@@ -537,7 +537,7 @@ export default function AdminDashboard() {
                       </p>
                     </div>
 
-                    {selectedPro.commissionHistory.length > 0 && (
+                    {(selectedPro.commissionHistory?.length || 0) > 0 && (
                       <div>
                         <h4 className="mb-2 text-sm font-semibold text-foreground">
                           Historico de Comissoes
