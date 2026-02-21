@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
 import mysql from "mysql2/promise";
 
 async function runMigration() {

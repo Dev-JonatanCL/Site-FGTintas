@@ -33,12 +33,9 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-            <Paintbrush className="h-5 w-5 text-primary-foreground" />
+          <div className="flex h-15 w-15 items-center justify-center rounded-lg">
+            <img src="/images/logo.png" alt="Logo FG Tintas"/>
           </div>
-          <span className="text-xl font-bold text-foreground">
-            FG Tintas
-          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -48,6 +45,12 @@ export function SiteHeader() {
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Inicio
+          </Link>
+          <Link
+            href="/produtos"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Produtos
           </Link>
           <Link
             href="/profissionais"

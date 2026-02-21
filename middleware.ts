@@ -8,6 +8,7 @@ const PUBLIC_ROUTES = [
   "/login",
   "/cadastro",
   "/profissionais",
+  "/produtos",
 ];
 
 const PUBLIC_API_ROUTES = [

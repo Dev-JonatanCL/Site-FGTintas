@@ -8,12 +8,9 @@ export function SiteFooter() {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                <Paintbrush className="h-5 w-5 text-primary-foreground" />
+              <div className="flex h-15 w-15 items-center justify-center rounded-lg">
+                <img src="/images/logo.png" alt="Logo FG Tintas"/>
               </div>
-              <span className="text-xl font-bold text-foreground">
-                FG Tintas
-              </span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Especializada em tintas automotivas, imobiliarias e
