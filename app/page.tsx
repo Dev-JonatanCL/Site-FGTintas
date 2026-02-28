@@ -14,25 +14,28 @@ import {
   ShieldCheck,
   Palette,
 } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const features = [
   {
     icon: Users,
     title: "Profissionais Qualificados",
     description:
-      "Encontre pintores experientes e verificados na sua regiao. Todos os profissionais passam por curadoria.",
+      "Encontre profissionais experientes na sua regiao, para qualquer tipo de pintura.",
   },
   {
     icon: Paintbrush,
     title: "Variedade de Tintas",
     description:
-      "Tintas automotivas, imobiliarias e industriais das melhores marcas do mercado.",
+      "Tintas imobiliarias, automotivas e industriais das melhores marcas do mercado.",
   },
   {
     icon: Award,
-    title: "Programa de Comissao",
+    title: "Programa de Premiação",
     description:
-      "Profissionais cadastrados ganham 1% de comissao sobre as compras de seus clientes na loja.",
+      "Profissionais cadastrados ganham 1% em premiação sobre as compras de seus clientes na loja. Clientes também recebem um desconto especial.",
   },
 ];
 
@@ -57,6 +60,54 @@ const specialties = [
     name: "Texturas e Efeitos",
     desc: "Decoracao personalizada",
   },
+];
+
+const articles = [
+  {
+    title: "Como escolher a tinta ideal para sua casa",
+    description:
+      "Descubra qual tipo de tinta usar para ambientes internos e externos.",
+    link: "/artigos/tinta-ideal",
+  },
+  {
+    title: "Dicas para pintura automotiva perfeita",
+    description:
+      "Aprenda técnicas profissionais para um acabamento impecável.",
+    link: "/artigos/pintura-automotiva",
+  },
+  {
+    title: "Tendências de cores para 2025",
+    description:
+      "Veja as cores que estão em alta para renovar seu ambiente.",
+    link: "/artigos/tendencias-2025",
+  },
+];
+
+const brands = [
+  { name: "Coral", logo: "images/Logo_Coral.png" },
+  { name: "Lukscolor", logo: "images/Logo_Lukscolor.png" },
+  { name: "Eucatex", logo: "images/Logo_Eucatex.png" },
+  { name: "Brasilux", logo: "images/Logo_Brasilux.png" },
+  { name: "Gama", logo: "images/Logo_Gama.webp" },
+  { name: "Dado", logo: "images/Logo_Dado.png" },
+  { name: "Atlas", logo: "images/Logo_Atlas.png" },
+  { name: "Tigre", logo: "images/Logo_Tigre.png" },
+  { name: "Sayerlack", logo: "images/Logo_Sayerlack.png" },
+  { name: "Viapol", logo: "images/Logo_Viapol.png" },
+  { name: "Menegotti", logo: "images/Logo_Menegotti.png" },
+  { name: "Galo", logo: "images/Logo_Galo.png" },
+  { name: "Maxi Rubber", logo: "images/Logo_MaxiRubber.svg" },
+  { name: "Norton", logo: "images/Logo_Norton.png" },
+  { name: "Mor", logo: "images/Logo_Mor.png" },
+  { name: "Qualyvinil", logo: "images/Logo_Qualy.png" },
+  { name: "Adere", logo: "images/Logo_Adere.png" },
+  { name: "Adelbras", logo: "images/Logo_Adelbras.png" },
+];
+
+const partners = [
+  { name: "Casa do Construtor", logo: "images/Logo_CC.jpg" },
+  { name: "Publi", logo: "images/Logo_Publi.png" },
+  { name: "Sun7", logo: "images/Logo_Sun7.jpg" },
 ];
 
 export default function HomePage() {
@@ -136,6 +187,42 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Articles section */}
+        <section className="py-20">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+                Artigos e Dicas
+              </h2>
+              <p className="mt-3 text-muted-foreground">
+                Conteúdo exclusivo para profissionais e clientes
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-3">
+              {articles.map((article) => (
+                <div
+                  key={article.title}
+                  className="rounded-xl border border-border bg-card p-6 transition-all hover:shadow-lg"
+                >
+                  <h3 className="mb-3 text-lg font-semibold text-foreground">
+                    {article.title}
+                  </h3>
+                  <p className="mb-4 text-sm text-muted-foreground">
+                    {article.description}
+                  </p>
+                  <Link href={article.link}>
+                    <Button variant="ghost" className="gap-2 p-0">
+                      Ler mais
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* CTA section */}
         <section className="py-20">
           <div className="mx-auto max-w-7xl px-4">
@@ -170,6 +257,92 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Brands section */}
+        <section className="border-y border-border bg-muted/40 py-16">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="mb-10 text-center">
+              <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+                Marcas Parceiras
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                Trabalhamos com as melhores marcas do mercado
+              </p>
+            </div>
+
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={40}
+              slidesPerView={6}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 6 },
+              }}
+              className="items-center"
+            >
+              {brands.map((brand) => (
+                <SwiperSlide key={brand.name}>
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={brand.logo}
+                      alt={brand.name}
+                      className="h-12"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </section>
+
+        {/* Partners section */}
+        <section className="py-16">
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="mb-10 text-center">
+              <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+                Nossos Parceiros
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                Empresas que confiam na FG Tintas
+              </p>
+            </div>
+
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={40}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                640: { slidesPerView: 3 },
+                768: { slidesPerView: 4 },
+                1024: { slidesPerView: 6 },
+              }}
+              className="items-center"
+            >
+              {partners.map((partner) => (
+                <SwiperSlide key={partner.name}>
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="h-12"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </section>
       </main>

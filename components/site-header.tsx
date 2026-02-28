@@ -17,7 +17,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import {
-  Paintbrush,
   User,
   LogOut,
   LayoutDashboard,

@@ -14,13 +14,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
-    image: "/images/hero-1.jpg",
+    image: "/images/banner_1.jpeg",
     title: "FG Tintas",
     subtitle: "Sua loja especializada em tintas",
     description:
-      "Tintas automotivas, imobiliarias e industriais com a melhor qualidade e precos.",
-    cta: "Ver Profissionais",
-    href: "/profissionais",
+      "Tintas imobiliarias, automotivas e industriais com a melhor qualidade e precos.",
+    cta: "Ver Produtos",
+    href: "/produtos",
   },
   {
     image: "/images/hero-2.jpg",

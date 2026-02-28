@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "@/lib/auth-context";
 import { Toaster } from "@/components/ui/sonner";
+import { OrcamentoProvider } from "@/context/OrcamentoContext";
 import "./globals.css";
 
 const _inter = Inter({ subsets: ["latin"] });
@@ -23,15 +24,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
       <body className="font-sans antialiased">
         <AuthProvider>
-          {children}
-          <Toaster />
+          <OrcamentoProvider>
+            {children}
+            <Toaster />
+          </OrcamentoProvider>
         </AuthProvider>
         <Analytics />
       </body>
